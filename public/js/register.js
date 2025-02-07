@@ -1,4 +1,5 @@
-function login() {
+function register() {
+
     let isValid = true;
 
     $('input').each(function () {
@@ -15,7 +16,10 @@ function login() {
         return;
     }
 
+
+    let name = $('input[name="name"]').val();
     let email = $('input[name="email"]').val();
+    let store_name = $('input[name="store_name"]').val();
     let password = $('input[name="password"]').val();
 
     $.ajax({
@@ -23,15 +27,16 @@ function login() {
         type: 'POST',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: {
-            metodo: 'LOGAR',
+            metodo: 'REGISTER',
+            name: name,
             email: email,
+            store_name: store_name,
             password: password
-
         },
         success: function (response) {
             console.log(response);
             if (response.status) {
-                // location.reload();
+                window.location.href = '/';
                 toastr.success(response.msg);
             } else {
                 toastr.error(response.msg);

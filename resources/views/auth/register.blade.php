@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+@extends('layout')
+
+@push('head')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Register</title>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-</head>
-<body>
+    <script src="{{ asset('js/register.js') }}?v={{ time() }}"></script>
+@endpush
+
+@section('content')
     <div class="container">
         <h2>Merchant Register</h2>
 
-        <form method="POST" action="/register">
-            @csrf
+        <div>
+
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
@@ -22,8 +24,8 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Shop Name</label>
-                <input type="text" name="shop_name" class="form-control" placeholder="Enter your shop name" required>
+                <label for="store_name">Store Name</label>
+                <input type="text" name="store_name" class="form-control" placeholder="Enter your shop name" required>
             </div>
 
             <div class="form-group">
@@ -31,10 +33,10 @@
                 <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+            <button type="button" onclick="register()" class="btn btn-primary">Register</button>
+
+        </div>
 
         <a href="{{ route('website', ['c1' => '/']) }}" class="btn btn-link">Already have an account? Log in here</a>
     </div>
-</body>
-</html>
+@endsection
