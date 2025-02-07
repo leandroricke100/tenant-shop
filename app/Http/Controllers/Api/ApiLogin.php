@@ -23,6 +23,6 @@ class ApiLogin extends Controller
     public function login(Request $request)
     {
         $dados = $request->all();
-        return ['status' => false, 'msg' => 'testeeee123', 'dados' => $dados];
+        return ['status' => true, 'msg' => 'testeeee123', 'dados' => $dados];
     }
 }
