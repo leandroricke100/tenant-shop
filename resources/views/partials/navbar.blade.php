@@ -1,3 +1,31 @@
+<script>
+    function logout(user) {
+
+        console.log(user);
+        $.ajax({
+            url: '/api/Login',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                metodo: 'LOGOUT',
+                user: user,
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.status) {
+                    // location.reload();
+                    toastr.success(response.msg);
+                } else {
+                    toastr.error(response.msg);
+                }
+            }
+        });
+    }
+</script>
+
+
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="{{ url('admin/dashboard') }}">Tenant</a>
@@ -21,13 +49,9 @@
                     <hr class="dropdown-divider" />
                 </li>
                 <li>
-                    <form method="POST" action="#">
-                        @csrf
-                        <a class="dropdown-item" href="#" onclick="event.preventDefault();
-                    this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </a>
-                    </form>
+
+                    <a class="dropdown-item" onclick="logout('{{ session('user') }}')">Log Out</a>
+
                 </li>
             </ul>
         </li>

@@ -9,6 +9,9 @@ class IndexWebsiteController extends Controller
 {
     public function __invoke(Request $request)
     {
+
+        if (session('user')->admin) return redirect()->route('website', ['c1' => 'admin', 'c2' => 'dashboard']);
+
         [$c1, $c2, $c3, $c4] = array_pad($request->segments(), 4, '');
 
         if ($c1 == '') return view('auth.login');
@@ -16,10 +19,4 @@ class IndexWebsiteController extends Controller
 
         else return view('layout.404');
     }
-
-
 }
-
-
-
-

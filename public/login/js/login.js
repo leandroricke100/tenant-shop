@@ -19,7 +19,7 @@ function login() {
     let password = $('input[name="password"]').val();
 
     $.ajax({
-        url: '/api/Login',
+        url: '/api/User',
         type: 'POST',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: {
