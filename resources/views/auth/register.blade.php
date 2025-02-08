@@ -1,11 +1,13 @@
-@extends('layout')
+@extends('layout.layout-login')
+
+@section('title', 'Register')
 
 @push('head')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-    <script src="{{ asset('js/register.js') }}?v={{ time() }}"></script>
+
+    <link rel="stylesheet" href="{{ asset('login/css/login.css') }}">
+    <script src="{{ asset('login/js/register.js') }}?v={{ time() }}"></script>
 @endpush
 
 @section('content')

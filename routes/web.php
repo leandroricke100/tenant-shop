@@ -21,7 +21,7 @@ Route::post('/api/{model?}', function ($model = null) {
 });
 
 // Admin
-// Route::get('/admin/{c1?}/{c2?}/{c3?}/{c4?}', IndexAdminController::class)->name('admin');
+Route::get('/admin/{c1?}/{c2?}/{c3?}/{c4?}', IndexAdminController::class)->name('admin');
 
 // // Website
 Route::get('/{c1?}/{c2?}/{c3?}/{c4?}', IndexWebsiteController::class)->name('website');

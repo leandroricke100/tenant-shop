@@ -14,11 +14,7 @@ class IndexWebsiteController extends Controller
         if ($c1 == '') return view('auth.login');
         elseif ($c1 == 'register') return view('auth.register');
 
-        //dd($c1, $c2, $c3, $c4);
-
-        //if (session('usuario'))
-
-        //return view('auth.login');
+        else return view('layout.404');
     }
 
 
