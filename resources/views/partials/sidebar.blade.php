@@ -22,7 +22,7 @@
             <div class="collapse" id="collapseStores" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" href="{{ url('merchant/create-store') }}">Add Store</a>
-                    <a class="nav-link" href="{{ url('merchant/stores') }}">View Stores</a>
+                    <a class="nav-link" href="{{ url('merchant/store-list') }}">All Stores</a>
                 </nav>
             </div>
 
@@ -69,7 +69,7 @@
                     </div>
                 </nav>
             </div>
-            <div class="sb-sidenav-menu-heading">Addons</div>
+            {{-- <div class="sb-sidenav-menu-heading">Addons</div>
             <a class="nav-link" href="charts.html">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Charts
@@ -77,11 +77,11 @@
             <a class="nav-link" href="tables.html">
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 Tables
-            </a>
+            </a> --}}
         </div>
     </div>
     <div class="sb-sidenav-footer">
-        <div class="small">Logged in as:</div>
-        Start Bootstrap
+        <div class="small">Logged in as: {{ explode(' ', session('user')->name)[0] }}</div>
+
     </div>
 </nav>
