@@ -14,11 +14,26 @@ class IndexMerchantController extends Controller
         if (!$user) return redirect()->route('website', ['c1' => 'login']);
         [$c1, $c2, $c3, $c4] = array_pad($request->segments(), 4, '');
 
-        if ($c1 == 'merchant' && $c2 == 'store-list') return view('admin.dashboard');
-        if ($c1 == 'merchant' && $c2 == 'create-store') return view('admin.stores.create');
-        if ($c1 == 'merchant' && $c2 == 'edit-store' && isset($c3)) return view('admin.stores.edit', ['id' => $c3]);
-        if ($c1 == 'merchant' && $c2 == 'stores') return view('admin.stores.edit');
-        // elseif ($c1 == 'admin' && $c2 == 'category') return view('admin.category.index');
+        //list stores
+        if ($c1 == 'merchant' && $c2 == 'store-list') return view('admin.show-store');
+
+        //create store
+        if ($c1 == 'merchant' && $c2 == 'create-store') return view('admin.stores.create-store');
+        if ($c1 == 'merchant' && $c2 == 'edit-store' && isset($c3)) return view('admin.stores.edit-store', ['id' => $c3]);
+
+        //list stores
+        if ($c1 == 'merchant' && $c2 == 'category-list') return view('admin.show-category');
+
+        //create category
+        if ($c1 == 'merchant' && $c2 == 'create-category') return view('admin.stores.create-category');
+        if ($c1 == 'merchant' && $c2 == 'edit-category' && isset($c3)) return view('admin.stores.edit-category', ['id' => $c3]);
+
+       //list products
+       if ($c1 == 'merchant' && $c2 == 'product-list') return view('admin.show-product');
+
+       //create product
+       if ($c1 == 'merchant' && $c2 == 'create-product') return view('admin.stores.create-product');
+       if ($c1 == 'merchant' && $c2 == 'edit-product' && isset($c3)) return view('admin.stores.edit-product', ['id' => $c3]);
 
         else return view('layout.404');
     }

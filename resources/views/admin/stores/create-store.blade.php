@@ -2,7 +2,7 @@
 @section('title', 'Create Store')
 
 @push('head')
-    <script src="{{ asset('js/create-store.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('js/create.js') }}?v={{ time() }}"></script>
 @endpush
 
 

@@ -3,7 +3,7 @@
 @section('title', 'Admin Dashboard')
 
 @push('head')
-    <script src="{{ asset('js/edit-store.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('js/edit.js') }}?v={{ time() }}"></script>
 @endpush
 
 @php
@@ -105,7 +105,7 @@
                                 <td>{{ $store->store_name }}</td>
                                 <td>{{ $store->email }}</td>
                                 <td>
-                                    <a href="{{ url('merchant/edit-store/' . $store->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ url(isset($user) && $user ? 'admin/edit-store/' . $store->id : 'merchant/edit-store/' . $store->id) }}" class="btn btn-primary">Edit</a>
                                     <a onclick="deleteStore({{ $store->id }})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>

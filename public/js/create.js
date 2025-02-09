@@ -1,4 +1,4 @@
-function editStore() {
+function createStore() {
     let isValid = true;
 
     $('input').each(function () {
@@ -15,7 +15,6 @@ function editStore() {
 
     let store_name = $('input[name="store_name"]').val();
     let id_user = $('input[name="id_user"]').val();
-    let id_store = $('input[name="id_store"]').val();
 
     console.log(store_name, id_user);
 
@@ -24,10 +23,10 @@ function editStore() {
         type: 'POST',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: {
-            metodo: 'EDIT_STORE',
+            metodo: 'CREATE_STORE',
             store_name: store_name,
-            id_user: id_user,
-            id_store: id_store
+            id_user: id_user
+
         },
         success: function (response) {
             console.log(response);
@@ -55,26 +54,53 @@ function editStore() {
     });
 }
 
-function deleteStore(id) {
-    console.log(id);
+function createCategory() {
+    let isValid = true;
+    $('input').each(function () {
+        if ($(this).val().trim() === '') {
+            // $(this).css('border', '2px solid red');
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        toastr.error('Category name is required.');
+        return;
+    }
+
+    let name_category = $('input[name="name_category"]').val();
+    let id_user = $('input[name="id_user"]').val();
+
+    console.log(name_category, id_user);
+
     $.ajax({
         url: '/api/Store',
         type: 'POST',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: {
-            metodo: 'DELETE_STORE',
-            id_store: id
+            metodo: 'CREATE_CATEGORY',
+            name_category: name_category,
+            id_user: id_user
+
         },
         success: function (response) {
             console.log(response);
             if (response.status) {
+                if (response.user.admin == 1) {
+                    toastr.success(response.msg);
+                    //esperrar 2 segundos
+                    setTimeout(function () {
+                        window.location.href = '/admin/category-list';
+                    }, 1000);
 
-                toastr.success(response.msg);
-                setTimeout(function () {
-                    //atualizar a pagina reaload
-                    window.location.reload();
-
-                }, 1000);
+                    // window.location.href = '/admin/dashboard';
+                } else {
+                    toastr.success(response.msg);
+                    setTimeout(function () {
+                        window.location.href = '/merchant/category-list';
+                    }, 1000);
+                    // window.location.href = '/merchant/store-list';
+                }
 
             } else {
                 toastr.error(response.msg);

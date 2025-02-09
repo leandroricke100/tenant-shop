@@ -2,7 +2,7 @@
 @section('title', 'Create Store')
 
 @push('head')
-    <script src="{{ asset('js/edit-store.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('js/edit.js') }}?v={{ time() }}"></script>
 @endpush
 
 @php
@@ -31,7 +31,7 @@
         </div>
 
         <div class="mt-4 mb-0" style="display: flex; justify-content: end">
-            <button class="btn btn-primary btn-block" type="button" onclick="editStore()">Edits Store</button>
+            <button class="btn btn-primary btn-block" type="button" onclick="editStore()">Edit Store</button>
         </div>
 
     </div>

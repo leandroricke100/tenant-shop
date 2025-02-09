@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Store;
 use Illuminate\Http\Request;
@@ -17,6 +18,10 @@ class ApiStore extends Controller
         if ($data['metodo'] == 'CREATE_STORE') return response()->json($this->createStore($request));
         if ($data['metodo'] == 'EDIT_STORE') return response()->json($this->editStore($request));
         if ($data['metodo'] == 'DELETE_STORE') return response()->json($this->deleteStore($request));
+
+        if ($data['metodo'] == 'CREATE_CATEGORY') return response()->json($this->createCategory($request));
+        if ($data['metodo'] == 'EDIT_CATEGORY') return response()->json($this->editCategory($request));
+        if ($data['metodo'] == 'DELETE_CATEGORY') return response()->json($this->deleteCategory($request));
 
 
         return response()->json(['status' => false, 'msg' => 'Method not found!']);
@@ -57,5 +62,41 @@ class ApiStore extends Controller
         $store = Store::find($dados['id_store']);
         $store->delete();
         return ['status' => true, 'msg' => 'Store been sucessfully deleted!'];
+    }
+
+    public function createCategory(Request $request)
+    {
+        $dados = $request->all();
+        $user = session('user')->admin;
+
+        $category = Category::create([
+            'name_category' => $dados['name_category'],
+            'id_user' => $dados['id_user'],
+        ]);
+
+        return ['status' => true, 'msg' => 'Category been sucessfully created!', 'user' => $user];
+    }
+
+    public function editCategory(Request $request)
+    {
+        $dados = $request->all();
+        $user = session('user')->admin;
+
+        $category = Category::find($dados['id_category']);
+        $category->update([
+            'name_category' => $dados['category_name'],
+            'id_user' => $dados['id_user'],
+        ]);
+        return ['status' => true, 'msg' => 'Category been sucessfully edited!', 'user' => $user];
+    }
+
+    public function deleteCategory(Request $request)
+    {
+        $dados = $request->all();
+        // $user = session('user')->admin;
+
+        $category = Category::find($dados['id_category']);
+        $category->delete();
+        return ['status' => true, 'msg' => 'Category been sucessfully deleted!'];
     }
 }

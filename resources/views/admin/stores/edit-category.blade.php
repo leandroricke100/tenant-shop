@@ -1,0 +1,38 @@
+@extends('layout.admin')
+@section('title', 'Create Store')
+
+@push('head')
+    <script src="{{ asset('js/edit.js') }}?v={{ time() }}"></script>
+@endpush
+
+@php
+    use App\Models\Category;
+
+    $category = Category::find($id);
+    //dd($category, $id);
+@endphp
+
+
+@section('content')
+    {{-- <h1 class="mt-4">Create Store</h1> --}}
+    <ol class="breadcrumb mb-4 mt-4">
+        <li class="breadcrumb-item active">
+            <a href="{{ url('merchant/category-list') }}" style="text-decoration: none; color: #6c757d !important">Dashboard</a>
+        </li>
+    </ol>
+
+
+    <div class="card-body">
+        <input type="hidden" name="id_user" value="{{ $category->id_user }}">
+        <input type="hidden" name="id_category" value="{{ $category->id }}">
+        <div class="form-floating mb-3">
+            <input class="form-control" id="category_name" name="category_name" type="text" placeholder="Enter the category name..." value="{{ $category->name_category }}" />
+            <label for="category_name">Category Name</label>
+        </div>
+
+        <div class="mt-4 mb-0" style="display: flex; justify-content: end">
+            <button class="btn btn-primary btn-block" type="button" onclick="editCategory()">Edit Category</button>
+        </div>
+
+    </div>
+@endsection
