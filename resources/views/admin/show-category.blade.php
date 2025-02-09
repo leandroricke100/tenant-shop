@@ -22,8 +22,8 @@
     }
     //dd($categories);
     foreach ($categories as $store) {
-        $id_store = json_decode($store->id_store, true);
-        $store->name_store = Store::where('id', $id_store[0])->first()->store_name ?? '';
+        // $id_store = json_decode($store->id_store, true);
+        $store->name_store = Store::where('id', $store->id_store)->first()->store_name ?? '';
         //dd($store);
     }
 @endphp

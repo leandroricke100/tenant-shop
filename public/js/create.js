@@ -212,11 +212,12 @@ $(document).ready(function () {
                     $.each(response.category, function (index, category) {
                         $('#id_category').append('<option value="' + category.id + '">' + category.name + '</option>');
                     });
-                } else {
-                    // Caso não haja categorias, desabilitar o select
-                    $('#id_category').prop('disabled', true);
-                    toastr.error('No categories found for this store.');
                 }
+                // else {
+                //     // Caso não haja categorias, desabilitar o select
+                //     $('#id_category').prop('disabled', true);
+                //     toastr.error('No categories found for this store.');
+                // }
             },
             error: function () {
                 toastr.error('An error occurred while fetching categories.');

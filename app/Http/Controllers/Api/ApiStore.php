@@ -27,6 +27,7 @@ class ApiStore extends Controller
 
         if ($data['metodo'] == 'RELEASE_CATEGORY') return response()->json($this->releaseCategory($request));
         if ($data['metodo'] == 'CREATE_PRODUCT') return response()->json($this->createProduct($request));
+        if ($data['metodo'] == 'EDIT_PRODUCT') return response()->json($this->editProduct($request));
 
 
         return response()->json(['status' => false, 'msg' => 'Method not found!']);
@@ -73,12 +74,12 @@ class ApiStore extends Controller
     {
         $dados = $request->all();
         $user = session('user')->admin;
-        $idStores = array_map('intval', is_array($dados['id_store']) ? $dados['id_store'] : explode(',', $dados['id_store']));
+        // $idStores = array_map('intval', is_array($dados['id_store']) ? $dados['id_store'] : explode(',', $dados['id_store']));
 
         $category = Category::create([
             'name_category' => $dados['name_category'],
             'id_user' => $dados['id_user'],
-            'id_store' => json_encode($idStores, JSON_NUMERIC_CHECK),
+            'id_store' => $dados['id_store'],
         ]);
 
         return ['status' => true, 'msg' => 'Category been sucessfully created!', 'user' => $user];
@@ -89,13 +90,13 @@ class ApiStore extends Controller
         $dados = $request->all();
         $user = session('user')->admin;
 
-        $idStores = array_map('intval', is_array($dados['id_store']) ? $dados['id_store'] : explode(',', $dados['id_store']));
+        // $idStores = array_map('intval', is_array($dados['id_store']) ? $dados['id_store'] : explode(',', $dados['id_store']));
 
         $category = Category::find($dados['id_category']);
         $category->update([
             'name_category' => $dados['name_category'],
             'id_user' => $dados['id_user'],
-            'id_store' => json_encode($idStores, JSON_NUMERIC_CHECK),
+            'id_store' => $dados['id_store'],
         ]);
         return ['status' => true, 'msg' => 'Category been sucessfully edited!', 'user' => $user];
     }
@@ -144,5 +145,40 @@ class ApiStore extends Controller
         ]);
 
         return ['status' => true, 'msg' => 'Product been sucessfully created!', 'user' => $user, 'product' => $product, 'category' => $category];
+    }
+
+    public function editProduct(Request $request)
+    {
+        $dados = $request->all();
+        $user = session('user')->admin;
+
+        $product = Product::find($dados['id_product']);
+        $category = Category::find($product->id_category);
+
+        if ($dados['id_category'] != $category->id) {
+            $category->update([
+                'id_product' => null
+            ]);
+            $category = Category::find($dados['id_category']);
+            $category->update([
+                'id_product' => $product->id,
+            ]);
+        }
+
+        if($dados['id_store'] != $category->id_store){
+            $category->update([
+                'id_store' => $dados['id_store'],
+            ]);
+        }
+
+        $product->update([
+            'name_product' => $dados['name_product'],
+            'id_user' => $dados['id_user'],
+            'id_category' => $dados['id_category'],
+            'id_store' => $dados['id_store'],
+        ]);
+
+
+        return ['status' => true, 'msg' => 'Product been sucessfully edited!', 'user' => $user];
     }
 }

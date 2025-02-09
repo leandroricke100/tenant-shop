@@ -17,10 +17,10 @@
         $stores = Store::where('id_user', $user->id)->get();
     }
 
-    $selectedStoreIds = json_decode($categorySelect->id_store, true) ?? [];
-    if (!is_array($selectedStoreIds)) {
-        $selectedStoreIds = [$selectedStoreIds];
-    }
+    // $selectedStoreIds = json_decode($categorySelect->id_store, true) ?? [];
+    // if (!is_array($selectedStoreIds)) {
+    //     $selectedStoreIds = [$selectedStoreIds];
+    // }
 @endphp
 
 @section('content')
@@ -50,7 +50,7 @@
                     <select class="form-select" id="id_store">
                         <option value="">Selecione uma loja</option>
                         @foreach ($stores as $store)
-                            <option value="{{ $store->id }}" {{ in_array($store->id, $selectedStoreIds) ? 'selected' : '' }}>
+                            <option value="{{ $store->id }}" {{ $categorySelect->id_store == $store->id ? 'selected' : '' }}>
                                 {{ $store->store_name }}
                             </option>
                         @endforeach

@@ -27,6 +27,13 @@ class IndexAdminController extends Controller
         if ($c1 == 'admin' && $c2 == 'create-category') return view('admin.stores.create-category');
         if ($c1 == 'admin' && $c2 == 'edit-category' && isset($c3)) return view('admin.stores.edit-category', ['id' => $c3]);
 
+            //list products
+       if ($c1 == 'admin' && $c2 == 'product-list') return view('admin.show-product');
+
+       //create product
+       if ($c1 == 'admin' && $c2 == 'create-product') return view('admin.stores.create-product');
+       if ($c1 == 'admin' && $c2 == 'edit-product' && isset($c3)) return view('admin.stores.edit-product', ['id' => $c3]);
+
 
         else return view('layout.404');
     }

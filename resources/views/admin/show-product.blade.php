@@ -9,26 +9,29 @@
 @php
     use App\Models\Product;
     use App\Models\User;
+    use App\Models\Store;
+    use App\Models\Category;
 
     $user = session('user');
-
-    //dd($user);
 
     if ($user->admin == 1) {
         $products = Product::all();
     } else {
         $products = Product::where('id_user', $user->id)->get();
     }
-    //dd($products);
-    // foreach ($products as $store) {
-    //     $email = User::where('id', $store->id_user)->first()->email ?? '';
-    //     $store->email = $email;
-    // }
+    foreach ($products as $product) {
+        $product->store_name = Store::where('id', $product->id_store)->first()->store_name ?? '';
+        $product->category_name = Category::where('id', $product->id_category)->first()->name_category ?? '';
+    }
+
 @endphp
 
 
 
 @section('content')
+    @php
+        $user = session('user')->admin;
+    @endphp
     <h1 class="mt-4">Products</h1>
     <ol class="breadcrumb mb-4 mt-4">
         <li class="breadcrumb-item active">Dashboard</li>
@@ -41,7 +44,6 @@
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
-                {{-- SE $products NAO FOR NULL --}}
                 @if (count($products) > 0)
                     <thead>
                         <tr>
@@ -63,31 +65,19 @@
                     </tfoot>
                     <tbody>
 
-
-                        <tr>
-                            <td>1</td>
-                            <td>ihpne 14</td>
-                            <td>kings iphones</td>
-                            <td>iphones</td>
-                            <td>
-                                <a href="#" class="btn btn-primary">Edit</a>
-                                <a class="btn btn-danger">Delete</a>
-                            </td>
-                        </tr>
-
-
-
-                        {{-- @foreach ($products as $store)
+                        @foreach ($products as $product)
                             <tr>
-                                <td>{{ $store->id }}</td>
-                                <td>{{ $store->store_name }}</td>
-                                <td>{{ $store->email }}</td>
+                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->name_product }}</td>
+                                <td>{{ $product->store_name }}</td>
+                                <td>{{ $product->category_name }}</td>
                                 <td>
-                                    <a href="{{ url(isset($user) && $user ? 'admin/edit-store/' . $store->id : 'merchant/edit-store/' . $store->id) }}" class="btn btn-primary">Edit</a>
-                                    <a onclick="deleteStore({{ $store->id }})" class="btn btn-danger">Delete</a>
+                                    <a href="{{ url(isset($user) && $user ? 'admin/edit-product/' . $product->id : 'merchant/edit-product/' . $product->id) }}" class="btn btn-primary">Edit</a>
+                                    <a onclick="deleteProduct({{ $product->id }})" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
+
                     </tbody>
                 @endif
             </table>
