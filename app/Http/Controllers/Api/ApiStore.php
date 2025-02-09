@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Store;
 use Illuminate\Http\Request;
@@ -22,6 +23,10 @@ class ApiStore extends Controller
         if ($data['metodo'] == 'CREATE_CATEGORY') return response()->json($this->createCategory($request));
         if ($data['metodo'] == 'EDIT_CATEGORY') return response()->json($this->editCategory($request));
         if ($data['metodo'] == 'DELETE_CATEGORY') return response()->json($this->deleteCategory($request));
+
+
+        if ($data['metodo'] == 'RELEASE_CATEGORY') return response()->json($this->releaseCategory($request));
+        if ($data['metodo'] == 'CREATE_PRODUCT') return response()->json($this->createProduct($request));
 
 
         return response()->json(['status' => false, 'msg' => 'Method not found!']);
@@ -103,5 +108,41 @@ class ApiStore extends Controller
         $category = Category::find($dados['id_category']);
         $category->delete();
         return ['status' => true, 'msg' => 'Category been sucessfully deleted!'];
+    }
+
+    public function releaseCategory(Request $request)
+    {
+        $dados = $request->all();
+        $user = session('user')->admin;
+        $category = Category::whereJsonContains('id_store', (int)$dados['id_store'])->get();
+
+        $categories = $category->map(function ($cat) {
+            return [
+                'id' => $cat->id,
+                'name' => $cat->name_category
+            ];
+        });
+
+        return ['status' => false, 'msg' => 'Store successfully selected', 'category' => $categories];
+    }
+
+    public function createProduct(Request $request)
+    {
+        $dados = $request->all();
+        $user = session('user')->admin;
+
+        $product = Product::create([
+            'name_product' => $dados['name_product'],
+            'id_user' => $dados['id_user'],
+            'id_category' => $dados['id_category'],
+            'id_store' => $dados['id_store'],
+        ]);
+
+        $category = Category::find($dados['id_category']);
+        $category->update([
+            'id_product' => $product->id
+        ]);
+
+        return ['status' => true, 'msg' => 'Product been sucessfully created!', 'user' => $user, 'product' => $product, 'category' => $category];
     }
 }
