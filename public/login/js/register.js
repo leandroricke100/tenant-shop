@@ -36,8 +36,8 @@ function register() {
         success: function (response) {
             console.log(response);
             if (response.status) {
-                window.location.href = '/';
                 toastr.success(response.msg);
+                window.location.href = '/login';
             } else {
                 toastr.error(response.msg);
             }

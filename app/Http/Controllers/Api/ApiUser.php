@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Store;
 use Illuminate\Http\Request;
 
 class ApiUser extends Controller
@@ -37,11 +38,16 @@ class ApiUser extends Controller
         $user = User::create([
             'name' => $dados['name'],
             'email' => $dados['email'],
+            'admin' => 0,
             'password' => bcrypt($dados['password']),
-            'store_name' => $dados['store_name']
         ]);
 
-        return ['status' => true, 'msg' => 'Your account been sucessfully created!'];
+        $store = Store::create([
+            'store_name' => $dados['store_name'],
+            'id_user' => $user->id,
+        ]);
+
+        return ['status' => true, 'msg' => 'Your account been sucessfully created!', 'user' => $user, 'store' => $store];
     }
 
     public function logout(Request $request)

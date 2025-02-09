@@ -38,7 +38,7 @@ function login() {
                         window.location.href = '/admin/dashboard';
                     }, 2000);
 
-                    window.location.href = '/admin/dashboard';
+                    // window.location.href = '/admin/dashboard';
                 } else {
                     window.location.href = '/merchant/store-list';
                 }
