@@ -70,46 +70,47 @@ function editCategory() {
         return;
     }
 
+    let name_category = $('input[name="category_name"]').val();
     let id_category = $('input[name="id_category"]').val();
     let id_user = $('input[name="id_user"]').val();
-    let category_name = $('input[name="category_name"]').val();
+    let id_store = $('#id_store').val();
 
 
+        $.ajax({
+            url: '/api/Store',
+            type: 'POST',
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            data: {
+                metodo: 'EDIT_CATEGORY',
+                id_store: id_store,
+                id_user: id_user,
+                id_category: id_category,
+                name_category: name_category
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.status) {
+                    if (response.user.admin == 1) {
+                        toastr.success(response.msg);
+                        //esperrar 2 segundos
+                        setTimeout(function () {
+                            window.location.href = '/admin/category-list';
+                        }, 1000);
 
-    $.ajax({
-        url: '/api/Store',
-        type: 'POST',
-        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        data: {
-            metodo: 'EDIT_CATEGORY',
-            category_name: category_name,
-            id_user: id_user,
-            id_category: id_category
-        },
-        success: function (response) {
-            console.log(response);
-            if (response.status) {
-                if (response.user.admin == 1) {
-                    toastr.success(response.msg);
-                    //esperrar 2 segundos
-                    setTimeout(function () {
-                        window.location.href = '/admin/category-list';
-                    }, 1000);
+                        // window.location.href = '/admin/dashboard';
+                    } else {
+                        toastr.success(response.msg);
+                        setTimeout(function () {
+                            window.location.href = '/merchant/category-list';
+                        }, 1000);
+                        // window.location.href = '/merchant/store-list';
+                    }
 
-                    // window.location.href = '/admin/dashboard';
                 } else {
-                    toastr.success(response.msg);
-                    setTimeout(function () {
-                        window.location.href = '/merchant/category-list';
-                    }, 1000);
-                    // window.location.href = '/merchant/store-list';
+                    toastr.error(response.msg);
                 }
-
-            } else {
-                toastr.error(response.msg);
             }
-        }
-    });
+        });
 }
 
 function deleteStore(id) {

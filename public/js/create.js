@@ -9,14 +9,13 @@ function createStore() {
     });
 
     if (!isValid) {
-        toastr.error('Store name is required.');
+        toastr.error('Please fill in all fields.');
         return;
     }
 
     let store_name = $('input[name="store_name"]').val();
     let id_user = $('input[name="id_user"]').val();
 
-    console.log(store_name, id_user);
 
     $.ajax({
         url: '/api/Store',
@@ -70,8 +69,9 @@ function createCategory() {
 
     let name_category = $('input[name="name_category"]').val();
     let id_user = $('input[name="id_user"]').val();
+    let id_store = $('#id_store').val();
 
-    console.log(name_category, id_user);
+    // console.log(name_category, id_user, id_store);
 
     $.ajax({
         url: '/api/Store',
@@ -80,7 +80,8 @@ function createCategory() {
         data: {
             metodo: 'CREATE_CATEGORY',
             name_category: name_category,
-            id_user: id_user
+            id_user: id_user,
+            id_store: id_store
 
         },
         success: function (response) {

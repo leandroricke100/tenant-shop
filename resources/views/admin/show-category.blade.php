@@ -9,6 +9,7 @@
 @php
     use App\Models\Category;
     use App\Models\User;
+    use App\Models\Store;
 
     $user = session('user');
 
@@ -20,10 +21,11 @@
         $categories = Category::where('id_user', $user->id)->get();
     }
     //dd($categories);
-    // foreach ($categories as $store) {
-    //     $email = User::where('id', $store->id_user)->first()->email ?? '';
-    //     $store->email = $email;
-    // }
+    foreach ($categories as $store) {
+        $id_store = json_decode($store->id_store, true);
+        $store->name_store = Store::where('id', $id_store[0])->first()->store_name ?? '';
+        //dd($store);
+    }
 @endphp
 
 
@@ -52,7 +54,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Merchant Name</th>
-                            {{-- <th>Merchant Email</th> --}}
+                            <th>Merchant Category</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -60,7 +62,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Merchant Name</th>
-                            {{-- <th>Merchant Email</th> --}}
+                            <th>Merchant Category</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
@@ -69,6 +71,7 @@
                             <tr>
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name_category }}</td>
+                                <td>{{ $category->name_store }}</td>
                                 <td>
                                     <a href="{{ url(isset($user) && $user ? 'admin/edit-category/' . $category->id : 'merchant/edit-category/' . $category->id) }}" class="btn btn-primary">Edit</a>
                                     <a onclick="deleteCategory({{ $category->id }})" class="btn btn-danger">Delete</a>

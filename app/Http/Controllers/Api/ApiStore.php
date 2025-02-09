@@ -68,10 +68,12 @@ class ApiStore extends Controller
     {
         $dados = $request->all();
         $user = session('user')->admin;
+        $idStores = array_map('intval', is_array($dados['id_store']) ? $dados['id_store'] : explode(',', $dados['id_store']));
 
         $category = Category::create([
             'name_category' => $dados['name_category'],
             'id_user' => $dados['id_user'],
+            'id_store' => json_encode($idStores, JSON_NUMERIC_CHECK),
         ]);
 
         return ['status' => true, 'msg' => 'Category been sucessfully created!', 'user' => $user];
@@ -82,10 +84,13 @@ class ApiStore extends Controller
         $dados = $request->all();
         $user = session('user')->admin;
 
+        $idStores = array_map('intval', is_array($dados['id_store']) ? $dados['id_store'] : explode(',', $dados['id_store']));
+
         $category = Category::find($dados['id_category']);
         $category->update([
-            'name_category' => $dados['category_name'],
+            'name_category' => $dados['name_category'],
             'id_user' => $dados['id_user'],
+            'id_store' => json_encode($idStores, JSON_NUMERIC_CHECK),
         ]);
         return ['status' => true, 'msg' => 'Category been sucessfully edited!', 'user' => $user];
     }
