@@ -2,6 +2,10 @@
 
 @section('title', 'Admin Dashboard')
 
+@push('head')
+    <script src="{{ asset('js/edit-store.js') }}?v={{ time() }}"></script>
+@endpush
+
 @php
     use App\Models\Store;
     use App\Models\User;
@@ -20,8 +24,6 @@
         $email = User::where('id', $store->id_user)->first()->email ?? '';
         $store->email = $email;
     }
-
-    //dd($stores);
 
 @endphp
 
@@ -82,21 +84,30 @@
                 @if (count($stores) > 0)
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Merchant Name</th>
                             <th>Merchant Email</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>ID</th>
                             <th>Merchant Name</th>
                             <th>Merchant Email</th>
+                            <th>Actions</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         @foreach ($stores as $store)
                             <tr>
+                                <td>{{ $store->id }}</td>
                                 <td>{{ $store->store_name }}</td>
                                 <td>{{ $store->email }}</td>
+                                <td>
+                                    <a href="{{ url('merchant/edit-store/' . $store->id) }}" class="btn btn-primary">Edit</a>
+                                    <a onclick="deleteStore({{ $store->id }})" class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

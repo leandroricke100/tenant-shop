@@ -15,6 +15,9 @@ class ApiStore extends Controller
         if (!$data['metodo']) return response()->json(['status' => false, 'msg' => 'Method not found!']);
 
         if ($data['metodo'] == 'CREATE_STORE') return response()->json($this->createStore($request));
+        if ($data['metodo'] == 'EDIT_STORE') return response()->json($this->editStore($request));
+        if ($data['metodo'] == 'DELETE_STORE') return response()->json($this->deleteStore($request));
+
 
         return response()->json(['status' => false, 'msg' => 'Method not found!']);
     }
@@ -33,4 +36,26 @@ class ApiStore extends Controller
         return ['status' => true, 'msg' => 'Store been sucessfully created!', 'user' => $user, 'store' => $store];
     }
 
+    public function editStore(Request $request)
+    {
+        $dados = $request->all();
+        $user = session('user')->admin;
+
+        $store = Store::find($dados['id_store']);
+        $store->update([
+            'store_name' => $dados['store_name'],
+            'id_user' => $dados['id_user'],
+        ]);
+        return ['status' => true, 'msg' => 'Store been sucessfully edited!', 'user' => $user, 'store' => $store];
+    }
+
+    public function deleteStore(Request $request)
+    {
+        $dados = $request->all();
+        // $user = session('user')->admin;
+
+        $store = Store::find($dados['id_store']);
+        $store->delete();
+        return ['status' => true, 'msg' => 'Store been sucessfully deleted!'];
+    }
 }
