@@ -3,26 +3,26 @@
         <div class="nav">
             <div class="sb-sidenav-menu-heading">Core</div>
 
-            <a class="nav-link" href="{{ url('admin/dashboard') }}">
+            <a class="nav-link" href="{{ url('merchant/store-list') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Dashboard
             </a>
 
-            <a class="nav-link" href="{{ url('admin/category') }}">
+            <a class="nav-link" href="{{ url('merchant/store-list') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                Category
+                Stores
             </a>
 
             <div class="sb-sidenav-menu-heading">Interface</div>
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseStores" aria-expanded="false" aria-controls="collapseStores">
                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                Products
+                Stores
                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
-            <div class="collapse" id="collapseProducts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+            <div class="collapse" id="collapseStores" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="{{ url('admin/products/create') }}">Add Product</a>
-                    <a class="nav-link" href="{{ url('admin/products') }}">View Products</a>
+                    <a class="nav-link" href="{{ url('merchant/create-store') }}">Add Store</a>
+                    <a class="nav-link" href="{{ url('merchant/stores') }}">View Stores</a>
                 </nav>
             </div>
 

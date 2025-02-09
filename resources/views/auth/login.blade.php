@@ -10,6 +10,7 @@
 @endpush
 
 @section('content')
+
     <div class="container">
         <h2>Login</h2>
 

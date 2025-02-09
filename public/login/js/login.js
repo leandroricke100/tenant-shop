@@ -31,8 +31,18 @@ function login() {
         success: function (response) {
             console.log(response);
             if (response.status) {
-                // location.reload();
-                toastr.success(response.msg);
+                if (response.user.admin == 1) {
+                    toastr.success(response.msg);
+                    //esperrar 2 segundos
+                    setTimeout(function () {
+                        window.location.href = '/admin/dashboard';
+                    }, 2000);
+
+                    window.location.href = '/admin/dashboard';
+                } else {
+                    window.location.href = '/merchant/store-list';
+                }
+
             } else {
                 toastr.error(response.msg);
             }

@@ -24,6 +24,14 @@ function pNotif(status, msg, titulo = null, options = {}) {
         alert(msg);
     } else {
         let tipo = typeof status === 'string' ? status : status ? 'success' : 'error';
-        toastr[tipo](msg, tituloNotif, { timeOut: 4000, extendedTimeOut: 1000, closeDuration: 300, progressBar: true, closeButton: true, closeHtml: '<button><i class="fal fa-times"></i></button>', ...options });
+        toastr[tipo](msg, tituloNotif, {
+            timeOut: 4000, // Tempo de exibição em milissegundos (4000 ms = 4 segundos)
+            extendedTimeOut: 1000, // Tempo adicional após o usuário passar o mouse sobre o toast
+            closeDuration: 300, // Duração do efeito de fechamento
+            progressBar: true, // Exibe a barra de progresso
+            closeButton: true, // Exibe o botão de fechar
+            closeHtml: '<button><i class="fal fa-times"></i></button>', // HTML do botão de fechar
+            ...options // Outras opções personalizadas
+        });
     }
 }

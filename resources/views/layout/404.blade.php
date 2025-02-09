@@ -20,7 +20,7 @@
                                 <div class="text-center mt-4">
                                     <img class="mb-4 img-error" src="{{ asset('assets/erro-404.svg') }}" />
                                     <p class="lead">This requested URL was not found on this server.</p>
-                                    <a href="{{ route('website', ['c1' => 'admin', 'c2' => 'dashboard']) }}">
+                                    <a href="{{ route('website', ['c1' => '/']) }}">
                                         <i class="fas fa-arrow-left me-1"></i>
                                         Return to Dashboard
                                     </a>

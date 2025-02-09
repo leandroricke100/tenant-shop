@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Index\IndexAdminController;
+use App\Http\Controllers\Index\IndexMerchantController;
 use App\Http\Controllers\Index\IndexWebsiteController;
 
 // Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -22,6 +23,8 @@ Route::post('/api/{model?}', function ($model = null) {
 
 // Admin
 Route::get('/admin/{c1?}/{c2?}/{c3?}/{c4?}', IndexAdminController::class)->name('admin');
+
+Route::get('/merchant/{c1?}/{c2?}/{c3?}/{c4?}', IndexMerchantController::class)->name('merchant');
 
 // // Website
 Route::get('/{c1?}/{c2?}/{c3?}/{c4?}', IndexWebsiteController::class)->name('website');

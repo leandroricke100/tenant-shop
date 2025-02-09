@@ -3,7 +3,7 @@
 
         console.log(user);
         $.ajax({
-            url: '/api/Login',
+            url: '/api/User',
             type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -15,8 +15,15 @@
             success: function(response) {
                 console.log(response);
                 if (response.status) {
-                    // location.reload();
+
                     toastr.success(response.msg);
+
+
+                    setTimeout(function() {
+                        window.location.href = '/';
+                    }, 2000);
+
+                    // window.location.href = '/';
                 } else {
                     toastr.error(response.msg);
                 }
