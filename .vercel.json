@@ -1,5 +1,10 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/public/$1" }
+    "build": {
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "routes": [
+      { "src": "/(.*)", "dest": "/public/$1" }
     ]
   }
